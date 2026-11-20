@@ -1,0 +1,239 @@
+# Gemensamma inställningar för projektet.
+
+[paths]
+# Anges som relativa sökvägar från projektets rot.
+# Loggar, test-snapshot och prognosarkiv är MALLAR med {pm25_tidsserie_id} —
+# de namnrymds per stationpar i src/config.bygg_station_config, så att paren
+# aldrig skriver över varandras championer, loggar eller arkiv.
+raw_dir = "data/raw"              # rådata från API:erna, versionshanteras
+merged_dir = "data/merged"        # Mergad raw data
+validated_dir = "data/validated"  # validerad data, inte interpolerad
+processed_dir = "data/processed"  # rensad data, skapas av koden, versionshanteras inte
+test_last_dir = "data/test/last_{pm25_tidsserie_id}"  # låst test-snapshot (plan 02), per par: fryser en testperiod för oberoende, rapporterande utvärdering — ALDRIG modellval
+models_dir = "models"             # rot; varje par får models/<tidsserie_id>/
+champion_log = "logs/champion_vanlig_{pm25_tidsserie_id}.csv"  # championer för den vanliga linjen: vinnande modell, timestamp och modellfil per körning
+forskjuten_log = "logs/champion_forskjuten_{pm25_tidsserie_id}.csv"  # championer för den förskjutna linjen (måltidsväder). Hålls skild från champion_log, så att champion_is_fresh inte påverkas
+nisch_log = "logs/champion_nisch_{pm25_tidsserie_id}.csv"  # championer för nisch-linjen (höga PM2.5, plan 01). Egen logg = egen färskhetsklocka, precis som den förskjutna linjen
+datakontroll_log = "logs/datakontroll_{pm25_tidsserie_id}.csv"
+jamfordelse_log = "logs/jamforelse_champion_{pm25_tidsserie_id}.csv"  # de två championerna och baslinjen mot varandra på det låsta test-snapshottet
+bortfallsanalys_log = "logs/bortfallsanalys_{pm25_tidsserie_id}.csv"  # plan 04: en rad per data-gap >= 6 h (start, slut, längd, månad) — mönstret, inte bara omfånget
+
+[paths.filenames]
+# {}-placeholders ersätts i config.py med värden från TOML
+train_pm25              = "train_{pm25_station}_{train_start}_{train_slut}_pm25tidsserie_{pm25_tidsserie_id}.csv"
+train_vader             = "train_{vaderstation}_{train_start}_{train_slut}_vaderstationid_{vaderstation_id}.csv"
+train_merged            = "train_merged_{train_start}_{train_slut}_pm25tidsserie_{pm25_tidsserie_id}_vaderstationid_{vaderstation_id}.csv"
+# Förskjuten modellinje (måltidsväder): bearbetade dataset där värdet i
+# väderkolumnerna på rad T kommer från T + horisont. Testvarianten byggs
+# men utvärderas först i den framtida engångsutvärderingen.
+train_processed_forskjuten = "train_processed_forskjuten_{train_start}_{train_slut}_h{horisont}_pm25tidsserie_{pm25_tidsserie_id}_vaderstationid_{vaderstation_id}.csv"
+val_processed_forskjuten   = "val_processed_forskjuten_{validering_start}_{validering_slut}_h{horisont}_pm25tidsserie_{pm25_tidsserie_id}_vaderstationid_{vaderstation_id}.csv"
+train_validated         = "train_validated_{train_start}_{train_slut}_pm25tidsserie_{pm25_tidsserie_id}_vaderstationid_{vaderstation_id}.csv"
+train_processed         = "train_processed_{train_start}_{train_slut}_pm25tidsserie_{pm25_tidsserie_id}_vaderstationid_{vaderstation_id}.csv"
+val_validated           = "val_validated_{validering_start}_{validering_slut}_pm25tidsserie_{pm25_tidsserie_id}_vaderstationid_{vaderstation_id}.csv"
+val_processed           = "val_processed_{validering_start}_{validering_slut}_pm25tidsserie_{pm25_tidsserie_id}_vaderstationid_{vaderstation_id}.csv"
+val_pm25 = "val_{pm25_station}_{validering_start}_{validering_slut}_pm25tidsserie_{pm25_tidsserie_id}.csv"
+val_vader = "val_{vaderstation}_{validering_start}_{validering_slut}_vaderstationid_{vaderstation_id}.csv"
+val_merged = "val_merged_{validering_start}_{validering_slut}_pm25tidsserie_{pm25_tidsserie_id}_vaderstationid_{vaderstation_id}.csv"
+
+# Testdata
+test_pm25 = "test_{pm25_station}_{test_start}_{test_slut}_pm25tidsserie_{pm25_tidsserie_id}.csv"
+test_vader = "test_{vaderstation}_{test_start}_{test_slut}_vaderstationid_{vaderstation_id}.csv"
+test_merged = "test_merged_{test_start}_{test_slut}_pm25tidsserie_{pm25_tidsserie_id}_vaderstationid_{vaderstation_id}.csv"
+test_validated = "test_validated_{test_start}_{test_slut}.csv"
+test_processed = "test_processed_{test_start}_{test_slut}.csv"
+
+[api]
+luft = "https://datavardluft.smhi.se/52North/api"
+vader = "https://opendata-download-metobs.smhi.se/api/version/1.0"
+
+[model]
+horisont = 6 # Prognosshorisont i timmar
+# Vilket mått som avgör bästa modell (plan 02: den viktade kompositscoren,
+# lägre = bättre — se [model.composite] nedan). Måste matcha en kolumn i
+# results_df exakt. Båda nycklarna är sanna om sitt namn: kandidatval OCH
+# championduell sker på VALIDERINGSDATA; testdata används aldrig i något
+# val (bara i den låsta slutrapporten i data/test/last).
+# Giltiga alternativ:
+#   "Validation Composite" (plan 02, lägre är bättre)
+#   "Validation MAE"       (lägre är bättre)
+#   "Validation RMSE"      (lägre är bättre)
+#   "Validation R²"        (högre är bättre)
+candidate_selection_metric = "Validation Composite"
+champion_selection_metric = "Validation Composite"
+
+random_state = 42
+antal_dagar_sedan = 7  # champion räknas som färsk om tränad inom detta antal dagar
+target_column = "target"        # namn på målvariabeln i processade filer
+
+[model.features]
+# Features som modellerna ska använda
+columns = [
+    "pm25",
+    "Lufttemperatur",
+    "vind_sin",
+    "vind_cos",
+    "Vindhastighet",
+    "Relativ luftfuktighet",
+    "Nederbördsmängd",
+    "timme_sin",
+    "timme_cos",
+    "helg",
+    "helg_timme_sin",
+    "helg_timme_cos",
+]
+
+[model.forskjuten]
+# Förskjuten modellinje: måltidsväder. Vädrets värde på rad T hämtas från
+# T + horisont (från [model] ovan), dvs. vädret som råder när PM2.5-målet
+# realiseras. OBS: vid live-prediktion ska väder-slotten fylls med en
+# VÄDERPROGNOS för T + horisont (inte en observation) – träning och live
+# måste använda samma slot-alignment (se docs/evaluation.md).
+
+# Råa väderkolumner i merged-filerna som ersätts med måltidsväder.
+# Vindriktning skiftas före sin/cos-omvandlingen, så vind-feature:n följer med.
+vaderkolumner = [
+    "Lufttemperatur",
+    "Vindriktning",
+    "Vindhastighet",
+    "Relativ luftfuktighet",
+    "Nederbördsmängd",
+]
+antal_dagar_sedan = 7  # förskjuten champion räknas som färsk om tränad inom detta antal dagar
+
+[model.high_pm]
+# Nisch-modellinjen för höga PM2.5-halter (plan 01, beslut 2026-11-15).
+# threshold_rule = "pm25_p90_training": gränsen för "ovanligt hög" PM2.5
+# är 90:e percentilen av träningsdatans pm25 (värdet vid T — samma
+# kolumn som live-routern nycklar på). Gränsen beräknas om vid varje
+# omträning och sparas i nisch-championens .json-metadata, så att
+# träning och live aldrig kan använda olika gräns.
+threshold_rule = "pm25_p90_training"
+
+[model.composite]
+# Viktad kompositscore (plan 02, beslut 2026-11-15) som styr BÅDE
+# kandidatvalet och championduellen — på valideringsdata:
+#
+#   Composite = w_mae·MAE + w_high_mae·High-PM MAE
+#               + w_high_bias·|High-PM Bias|      (lägre = bättre)
+#
+# Den enskilda medelmåtten är blinda för modellernas underskattning vid
+# höga halter (rapportens −6 µg/m³); kompositen väger in den explicit.
+#
+# High-PM-termernas gräns är p90 av TRÄNINGSMÅLET (y_train, beräknas i
+# run_model_line) — OBS en annan gräns än nisch-linjens routningsgräns
+# (p90 av pm25 vid T, se [model.high_pm]).
+#
+# Saknas High-PM-underlag (NaN eller färre än min_antal_high rader över
+# gränsen i valideringen) renormaliseras vikterna på de kvarvarande
+# termerna och en varning loggas; utan High-PM alls blir scoren ren MAE.
+# Vikterna är en avvägning — testa känsligheten (t.ex. w_high_mae ∈
+# {0.2, 0.35, 0.5}) i en notebook innan en ny viktning låses (rapportens
+# kärnläxa: "systemet blir aldrig bättre än den matematiska
+# utvärderingsformel man har kodat in").
+w_mae = 0.5
+w_high_mae = 0.35
+w_high_bias = 0.15
+min_antal_high = 10
+
+[model.hparam_search]
+# Systematisk hyperparametersökning (plan 05, beslut 2026-11-15).
+# Körs ENBART i run_model_line vid omträning (championens
+# 7-dagarsklocka) – aldrig i live-prediktioner. Sökningen använder
+# TimeSeriesSplit med gap = horisont på träningsperioden, dvs. utan
+# måldataläckage; validering/test berörs inte av sökningen.
+# Sökresultatet delas mellan den vanliga och den förskjutna
+# modellinjen inom samma pipeline-körning (kostnadsoptimering).
+aktiverad = true
+n_splits = 4            # antal kronologiska fald i korsvalideringen
+lambda_high_pm = 0.5    # vikt på High-PM MAE i sök-score: -(MAE + λ·High-PM-MAE). 0 => ren MAE.
+svr_max_rader = 15000   # SVR söker på de senaste så många raderna (svit O(n²)-kostnad). 0 = alla rader.
+
+[model.hparam_search.grid.SVR]
+# Reporterns uttryckliga prioritet: C och epsilon. Mindre epsilon ger
+# mindre utjämning ("dämpad persistence") och är intressant för
+# high-PM-biasen.
+C = [0.5, 1.0, 2.0, 4.0, 8.0]
+epsilon = [0.05, 0.1, 0.2, 0.4]
+
+[model.hparam_search.grid."Ridge Regression"]
+alpha = [0.1, 0.3, 1.0, 3.0, 10.0]
+
+[model.hparam_search.grid."Random Forest"]
+n_estimators = [100, 200, 400]
+max_depth = ["none", 10, 20]   # "none" översätts till Python-None
+
+[model.hparam_search.grid."HistGradientBoosting"]
+learning_rate = [0.05, 0.1, 0.2]
+max_iter = [100, 200]
+
+[model.hparam_search.grid."LightGBM"]
+learning_rate = [0.05, 0.1, 0.2]
+n_estimators = [100, 300]
+
+[model.hparam_search.grid."XGBoost"]
+learning_rate = [0.05, 0.1, 0.2]
+n_estimators = [100, 300]
+# Linear Regression har inga parametrar att söka och saknas medvetet.
+
+[time]
+train_rullande_ar = 4         # träningen börjar som senast så här många år tillbaka
+                              # (rullande fönster); yngre serier börjar vid sitt
+                              # första värde — se bygg_station_config
+validering_manader = 6        # antal hela kalendermånader i valideringsperioden
+
+[stations]
+# Stationparsregler (beslut 2026-11-15): PM2.5-stationerna är huvud-
+# stationerna och upptäcks automatiskt ur SMHIs API:er — en station
+# paras med sin NÄRMASTE kvalificerade väderstation och en väderstation
+# FÅR serva flera PM2.5-stationer.
+max_km = 10                     # parningsradie (haversine)
+max_serie_alder_dagar = 14      # PM2.5-serien måste ha rapporterat inom detta fönstret,
+                                # annars räknas stationen som inaktiv och hoppas över
+min_traningsmanader = 24        # minst så många månader träningsdata krävs EFTER att
+                                # valideringsperiodens månader reserverats (2 år, beslut 2026-11-15)
+stationpar_cache = "data/stationer/stationspar_v1.csv"  # människoläsbar; granska gärna före körning
+cache_giltig_dagar = 7          # upptäckten körs som senast så här ofta
+
+[station]
+# Gemensamma väderparametrar — samma parameter-ID:gäller för alla
+# stationer; en väderstation kvalificerar bara om den mäter ALLA fem.
+# Väder-Parametrar vi vill extrahera från vårt väder-api
+parametrar = { "Lufttemperatur" = 1, "Vindriktning" = 3, "Vindhastighet" = 4, "Relativ luftfuktighet" = 6, "Nederbördsmängd" = 7 }
+
+[live]
+# Live-prediktioner
+# Prognos-URL:n formateras per stationpar i config.py med parets väderstations-
+# koordinater. Arkiv och prediktionslogg namnrymds per par ({pm25_tidsserie_id}).
+prognos_dir = "prognoser/{pm25_tidsserie_id}"                             # rå-JSON + arkiv-CSV:n loggas här
+prediktioner_log = "prognoser/{pm25_tidsserie_id}/prediktioner_live.csv"  # en rad per predikterad linje per körning
+skippad_log = "logs/live_skippad_{pm25_tidsserie_id}.csv"   # plan 04: en maskinläsbar rad per HOPPAD live-körning/linje med orsak — en normal körning skriver inget
+prognos_url = "https://opendata-download-metfcst.smhi.se/api/category/snow1g/version/1/geotype/point/lon/{LON}/lat/{LAT}/data.json"
+max_alder_timmar = 6   # hoppa över om T_obs (senaste komplette timmen) är äldre
+idempotent = true      # hoppa över om T_obs redan predikterats
+
+# ARKIV, EJ PREDIKTION: SMHIs punktprognos hämtas som rå-JSON med engelska
+# parameternycklar (t.ex. "air_temperature") och en prognosperiod längre än
+# projektet behöver. I minnet översätts nycklarna till vårt svenska
+# kolumnnamn-format ([live].prognos_parametrar styr omkodningen) och hela
+# prognosen returneras till pipelinen. Värdet här styr ENDAST arkiv-CSV:n:
+# de första "prognos_arkiv_timmar" timmarna – räknat från prognosens
+# referenstid och framåt i tiden – sparas som en trimmad kopia
+# (prognos_<referenstid>_24h.csv) bredvid den råa JSON:en, som alltid
+# arkiveras i sin helhet. Själva prediktionen påverkas aldrig: den läser
+# endast prognosraden vid T_obs + horisont ([model].horisont).
+prognos_arkiv_timmar = 24
+
+# Arkivstädning (stada_prognos_dir körs vid varje live-körning): filer
+# äldre än så många dagar tas bort ur arkivet. Åldern utläses ur
+# filnamnen, så bara projektets egna arkivfiler påverkas.
+prognos_bibehall_dagar = 30    # prognos_<referenstid>_utc.json + arkiv-CSV
+pm25_arkiv_bibehall_dagar = 7  # prognoser/pm25/<heltimme>.csv
+
+[live.prognos_parametrar]
+# Träningens väderkolumner -> prognosens parameternycklar (snow1g)
+"Lufttemperatur" = "air_temperature"
+"Vindriktning" = "wind_from_direction"
+"Vindhastighet" = "wind_speed"
+"Relativ luftfuktighet" = "relative_humidity"
+"Nederbördsmängd" = "precipitation_amount_mean"

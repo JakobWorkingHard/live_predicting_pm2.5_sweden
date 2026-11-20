@@ -1,0 +1,28 @@
+{
+  "model_name": "SVR forskjuten (T+6)",
+  "model_file": "C:\\Users\\Lenovo\\Desktop\\LIVE_predicting_PM2.5_SWEDEN\\models\\forskjuten_svr_forskjuten_(t+6)_Validation_R2_2026_11_15_20-39.joblib",
+  "variant": "forskjuten_",
+  "random_state": 42,
+  "selection_metric": "Validation R²",
+  "metrics": {
+    "Modell": "SVR",
+    "Train MAE": 2.1973662521095236,
+    "Train RMSE": 3.649081464856627,
+    "Train R²": 0.6800611341343814,
+    "Train Bias": -0.42253756667246467,
+    "Train High PM2.5 MAE": 6.365491558452487,
+    "Train High PM2.5 Bias": -5.490042929327647,
+    "Train High PM2.5 Count": 2231,
+    "Validation MAE": 2.2938641234937283,
+    "Validation RMSE": 3.595375372343094,
+    "Validation R²": 0.734630036527693,
+    "Validation Bias": -0.5897253146571773,
+    "Validation High PM2.5 MAE": 7.119853103830263,
+    "Validation High PM2.5 Bias": -5.76061755484442,
+    "Validation High PM2.5 Count": 407
+  },
+  "hparam_sok": {
+    "C": 2.0,
+    "epsilon": 0.4
+  }
+}

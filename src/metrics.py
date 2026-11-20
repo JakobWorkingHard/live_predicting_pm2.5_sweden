@@ -1,0 +1,625 @@
+from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
+from tabulate import tabulate
+import pandas as pd
+import numpy as np
+from datetime import datetime
+
+from src.io import append_jamfordelse_log
+from src.logger import setup_logger
+
+log = setup_logger(__name__)
+
+#------------------------------------------------------------------------
+# 1. Grundläggande mått
+#------------------------------------------------------------------------
+
+# Standardvikter för kompositscoren (plan 02). Kan överlagras i
+# [model.composite] i config.toml (se src/config.py).
+DEFAULT_COMPOSITE_VIKTER = {
+    "w_mae": 0.5,
+    "w_high_mae": 0.35,
+    "w_high_bias": 0.15,
+    "min_antal_high": 10,
+}
+
+
+def composite_score(metrics_dict, vikter=None):
+    """
+    Viktad kompositscore (plan 02) som styr både kandidatvalet och
+    championduellen — de enskilda medelmåtten är blinda för
+    underskattningen vid höga halter (rapportens −6 µg/m³):
+
+        Composite = w_mae·MAE + w_high_mae·High-PM MAE
+                    + w_high_bias·|High-PM Bias|
+
+    (lägre = bättre).
+
+    NaN-säker fallback: saknas High-PM-underlag (inga värden över
+    gränsen, eller färre än min_antal_high rader) droppas de
+    högdataladdade termerna, vikterna renormaliseras på de kvarvarande
+    och en varning loggas. Finns inget High-PM-underlag alls blir
+    scoren ren MAE.
+
+    Parametrar
+    ----------
+    metrics_dict : dict
+        Resultatet från evaluate_model (med threshold), dvs. med både
+        MAE och High PM2.5-mått.
+    vikter : dict, valfri
+        Vikter ("w_mae", "w_high_mae", "w_high_bias") och
+        "min_antal_high". Default: DEFAULT_COMPOSITE_VIKTER.
+
+    Returnerar
+    -------
+    float
+        Kompositscoren (lägre = bättre).
+    """
+    v = dict(DEFAULT_COMPOSITE_VIKTER)
+    v.update(vikter or {})
+
+    mae = metrics_dict.get("MAE")
+    if mae is None or pd.isna(mae):
+        raise ValueError(
+            "composite_score kräver ett giltigt MAE i metrics_dict "
+            f"(fick {mae!r})."
+        )
+
+    high_mae = metrics_dict.get("High PM2.5 MAE")
+    high_bias = metrics_dict.get("High PM2.5 Bias")
+    antal_high = metrics_dict.get("High PM2.5 Count", 0) or 0
+    min_antal = int(v.get("min_antal_high", 10))
+
+    har_high_underlag = (
+        not pd.isna(high_mae)
+        and not pd.isna(high_bias)
+        and antal_high >= min_antal
+    )
+
+    if har_high_underlag:
+        anvanda_vikter = {
+            "w_mae": float(v.get("w_mae", 0.5)),
+            "w_high_mae": float(v.get("w_high_mae", 0.35)),
+            "w_high_bias": float(v.get("w_high_bias", 0.15)),
+        }
+        tvarde = (
+            anvanda_vikter["w_mae"] * float(mae)
+            + anvanda_vikter["w_high_mae"] * float(high_mae)
+            + anvanda_vikter["w_high_bias"] * abs(float(high_bias))
+        )
+    else:
+        # Saknas High-PM-underlag: renormalisera på MAE och varna.
+        log.warning(
+            "Kompositscoren saknar High-PM-underlag (antal över gränsen: %s, "
+            "min_antal_high: %s) — poängsätter enbart MAE.",
+            antal_high, min_antal,
+        )
+        anvanda_vikter = {"w_mae": float(v.get("w_mae", 0.5))}
+        tvarde = anvanda_vikter["w_mae"] * float(mae)
+
+    summa_vikter = sum(anvanda_vikter.values())
+    if summa_vikter <= 0:
+        raise ValueError(
+            f"Kompositscorens vikter måste summera till > 0 (fick {summa_vikter})."
+        )
+
+    return float(tvarde / summa_vikter)
+
+def calculate_bias(y_true, y_pred):
+    y_true = np.asarray(y_true)
+    y_pred = np.asarray(y_pred)
+
+    return float(np.mean(y_pred - y_true))
+
+#------------------------------------------------------------------------
+# 2. Specialiserade mått
+#------------------------------------------------------------------------
+
+def calculate_high_pm25_metrics(y_true, y_pred, threshold):
+    """Beräknar MAE och Bias vid höga PM2.5-värden."""
+
+    y_true = np.asarray(y_true)
+    y_pred = np.asarray(y_pred)
+
+    mask = y_true >= threshold
+
+    if not mask.any():
+        return {
+            "High PM2.5 MAE": np.nan,
+            "High PM2.5 Bias": np.nan,
+            "High PM2.5 Count": 0,
+        }
+
+    return {
+        "High PM2.5 MAE": mean_absolute_error(
+            y_true[mask], y_pred[mask]
+        ),
+        "High PM2.5 Bias": calculate_bias(
+            y_true[mask], y_pred[mask]
+        ),
+        "High PM2.5 Count": int(mask.sum()),
+    }
+
+#----------------------------------------------------------
+# 3. Gemensam utvärdering
+#----------------------------------------------------------
+
+def evaluate_model(y_true, y_pred, threshold=None):
+    """
+    Utvärderar en modells prediktioner.
+
+    Beräknar MAE, RMSE, R² och Bias.
+    Om threshold anges beräknas även mått för höga PM2.5-värden.
+
+    Parametrar
+    ----------
+    y_true : array-like
+        Faktiska PM2.5-värden.
+    y_pred : array-like
+        Predicerade PM2.5-värden.
+    threshold : float, optional
+        Gränsvärde för höga PM2.5-koncentrationer.
+
+    Returnerar
+    -------
+    dict
+        Dictionary med modellens utvärderingsmått.
+    """
+
+    metrics = {
+        "MAE": mean_absolute_error(y_true, y_pred),
+        "RMSE": mean_squared_error(y_true, y_pred) ** 0.5,
+        "R2": r2_score(y_true, y_pred),
+        "Bias": calculate_bias(y_true, y_pred),
+    }
+
+    if threshold is not None:
+        metrics.update(
+            calculate_high_pm25_metrics(y_true, y_pred, threshold)
+        )
+
+    return metrics
+
+
+#----------------------------------------------------------
+# 4. Modelljämförelse
+#----------------------------------------------------------
+
+def build_comparison_table(results_df, baseline_val_metrics, sort_by, vikter=None):
+    """
+    Bygger en jämförelsetabell med alla modeller och persistence baseline.
+
+    Tar automatiskt med samtliga valideringsmått som finns
+    både i modellresultaten och baseline-resultatet.
+
+    Parametrar
+    ----------
+    results_df : pd.DataFrame
+        Resultat från train_and_evaluate_models.
+    baseline_val_metrics : dict
+        Utvärderingsmått för persistence baseline.
+    sort_by : str
+        Kolumn som tabellen ska sorteras efter.
+    vikter : dict, valfri
+        Vikter för kompositscoren (plan 02). Behövs när tabellen innehåller
+        en "Validation Composite"-kolumn: baslinjens komposit beräknas då
+        från dess egna mått, så att även baslinjen kan vinna valet ärligt.
+
+    Returnerar
+    -------
+    pd.DataFrame
+        Jämförelsetabell med modeller och baseline.
+    """
+
+    # 1. Hitta samtliga valideringskolumner
+    val_cols = [
+        col for col in results_df.columns
+        if col.startswith("Validation ")
+    ]
+
+    # 2. Välj modellnamn och valideringsmått
+    model_comparison = results_df[
+        ["Modell", *val_cols]
+    ].copy()
+
+    # 3. Skapa baseline-rad med motsvarande mått
+    baseline_row = {"Modell": "Persistence Baseline"}
+
+    for col in val_cols:
+        metric_name = col.removeprefix("Validation ")
+
+        if metric_name == "R²":
+            metric_name = "R2"
+
+        if (
+            metric_name == "Composite"
+            and "Composite" not in baseline_val_metrics
+        ):
+            # Plan 02: baslinjens komposit beräknas från dess egna mått,
+            # med samma vikter som modellernas komposit.
+            baseline_row[col] = composite_score(baseline_val_metrics, vikter)
+            continue
+
+        baseline_row[col] = baseline_val_metrics.get(
+            metric_name, float("nan")
+        )
+
+    # 4. Slå samman modeller och baseline
+    comparison_df = pd.concat(
+        [pd.DataFrame([baseline_row]), model_comparison],
+        ignore_index=True,
+    )
+
+    # 5. Sortera enligt valt utvärderingsmått
+    if sort_by not in comparison_df.columns:
+        raise ValueError(f"Okänt sorteringsmått: {sort_by}")
+
+    if "Bias" in sort_by:
+        comparison_df = comparison_df.sort_values(
+            by=sort_by,
+            key=lambda col: col.abs()
+        )
+
+    else:
+        higher_is_better = "R²" in sort_by or "R2" in sort_by
+
+        comparison_df = comparison_df.sort_values(
+            by=sort_by,
+            ascending=not higher_is_better
+        )
+
+    comparison_df = comparison_df.reset_index(drop=True)
+
+    return comparison_df
+
+#----------------------------------------------------------
+# 5. Modellval
+#----------------------------------------------------------
+
+def metric_direction(metric):
+    """
+    Anger vad som räknas som bäst för ett mått:
+      "higher"          R²: högre är bättre
+      "lower"           MAE, MSE, RMSE och Composite: lägre är bättre
+      "closest_to_zero" Bias: närmare noll är bättre
+    Används av select_best_model (och historiskt av
+    compete_with_champion), så att reglerna bara finns på ett ställe.
+    """
+    if "Composite" in metric:
+        return "lower"
+    if "Bias" in metric:
+        return "closest_to_zero"
+    if "R²" in metric or "R2" in metric:
+        return "higher"
+    return "lower"
+
+
+def select_best_model(results_df, metric="Validation MAE"):
+    """
+    Väljer den modell som presterar bäst enligt valt mått.
+
+    Urvalsregler
+    ------------
+    MAE, RMSE : lägre är bättre.
+    R²        : högre är bättre.
+    Bias      : närmare noll är bättre.
+
+    Parametrar
+    ----------
+    results_df : pd.DataFrame
+        Jämförelsetabell med modellernas resultat.
+    metric : str
+        Kolumn som används för modellval.
+
+    Returnerar
+    ----------
+    tuple[str, pd.Series]
+        Namn och resultatrad för bästa modellen.
+    """
+
+    # 1. Kontrollera att måttet finns
+    if metric not in results_df.columns:
+        raise ValueError(
+            f"Kolumnen {metric!r} finns inte i results_df. "
+            f"Tillgängliga kolumner: {list(results_df.columns)}"
+        )
+
+    # 2. Välj rätt urvalsregel
+    direction = metric_direction(metric)
+    if direction == "closest_to_zero":
+        best_idx = results_df[metric].abs().idxmin()
+    elif direction == "higher":
+        best_idx = results_df[metric].idxmax()
+    else:
+        best_idx = results_df[metric].idxmin()
+
+    # 3. Hämta bästa modellen
+    best_row = results_df.loc[best_idx]
+    best_name = best_row["Modell"]
+
+    return best_name, best_row
+
+
+#----------------------------------------------------------
+# 6. Presentation och testjämförelse
+#----------------------------------------------------------
+
+
+
+def display_df(df, **tabulate_kwargs):
+    """
+    Skriver ut en DataFrame som fancy_grid-tabell.
+
+    Extra nyckelordsargument (t.ex. disable_numparse, colalign) skickas
+    vidare till tabulate — disable_numparse=True behövs när kolumner
+    redan är formaterade som strängar, eftersom tabulate annars tolkar
+    numeriska strängar som tal och tar bort avslutande nollor.
+    """
+    print(
+        tabulate(
+            df,
+            headers="keys",
+            tablefmt="fancy_grid",
+            showindex=False,
+            **tabulate_kwargs,
+        )
+    )
+
+
+
+def jamfor_championer(
+    cfg,
+    champion_modell,
+    champion_namn: str,
+    forskjuten_modell,
+    forskjuten_namn: str,
+    test_path_vanlig,
+    test_path_forskjuten,
+    high_pm25_threshold: float | None = None,
+):
+    """
+    Head-to-head på TEST-data: den nuvarande championen mot den förskjuna
+    championen, plus persistence-baseline, på de testrader som är
+    kompletta i BÅDA varianterna. Körs vid omträning av den förskjuna
+    modellinjen (orchestrator block 6).
+
+    Plan 02: jämförelsen är ENBART informationell och körs mot det låsta
+    test-snapshottet i data/test/last (skapat med "python main.py
+    --ladda-test") — något automatiserat modellval läser aldrig testdata.
+    Resultatet matar alltså inte championduellen eller kandidatvalet.
+
+    Championen predikteras från sin egen processed-fil (vädret gäller T)
+    och den förskjuna modellen från sin (vädret gäller T+6). Raderna
+    matchas via kolumnen 'tid'.
+
+    Resultatet visas och appendas till logs/jamforelse_champion.csv.
+    Observera: den förskjuna modellen utvärderas här med OBSERVERAT väder
+    vid T+6 ("orakelprognos"), vilket ger ett övre gräns-värde – i
+    produktion tillkommer prognosfel (se docs/evaluation.md).
+
+    Parametrar
+    ----------
+    cfg : ProjectConfig
+        Konfiguration: features, target-kolumn, loggar, models-katalog.
+    champion_modell : estimator
+        Den nuvarande championen (laddad av anroparen, t.ex. via
+        hamta_champion_modell).
+    champion_namn : str
+        Namn på den nuvarande championen, t.ex. "SVR".
+    forskjuten_modell : estimator
+        Den tränade förskjuna championen.
+    forskjuten_namn : str
+        Namn på den förskjuna championen, t.ex. "SVR (T+6)".
+    test_path_vanlig : Path
+        Processad testfil för championens variant (vädret gäller T).
+        Plan 02: det låsta test-snapshottet, aldrig rullande testdata.
+    test_path_forskjuten : Path
+        Processad testfil för den förskjuna varianten (vädret gäller T+6).
+    """
+    if champion_modell is None:
+        log.warning(
+            "Hittade ingen sparad champion-modell. "
+            "Hoppar över head-to-head-jämförelsen på (låst) testdata."
+        )
+        return
+
+    champion_test = pd.read_csv(test_path_vanlig)
+    forskjuten_test = pd.read_csv(test_path_forskjuten)
+
+    gemensamma_tider = set(champion_test["tid"]) & set(forskjuten_test["tid"])
+
+    if not gemensamma_tider:
+        log.warning(
+            "Inga gemensamma testrader mellan championen och den "
+            "förskjuna varianten. Hoppar över jämförelsen."
+        )
+        return
+
+    # Samma tider, samma sortering: raderna motsvarar varandra exakt.
+    champion_rader = (
+        champion_test[champion_test["tid"].isin(gemensamma_tider)]
+        .sort_values("tid")
+        .reset_index(drop=True)
+    )
+    forskjuten_rader = (
+        forskjuten_test[forskjuten_test["tid"].isin(gemensamma_tider)]
+        .sort_values("tid")
+        .reset_index(drop=True)
+    )
+
+    if not champion_rader[cfg.target_column].equals(
+        forskjuten_rader[cfg.target_column]
+    ):
+        log.warning(
+            "Målvärdena skiljer mellan filerna på de gemensamma raderna. "
+            "Jämförelsen kan vara missvisande."
+        )
+
+    y = champion_rader[cfg.target_column]
+
+    prediktioner = {
+        f"{champion_namn} (nuvarande champion)": champion_modell.predict(
+            champion_rader[cfg.features]
+        ),
+        forskjuten_namn: forskjuten_modell.predict(forskjuten_rader[cfg.features]),
+        "Persistence Baseline": champion_rader["pm25"],
+    }
+
+    rader = []
+
+    for namn, y_pred in prediktioner.items():
+
+        resultat = evaluate_model(
+            y,
+            y_pred,
+            threshold=high_pm25_threshold,
+        )
+
+        rader.append({
+            "timestamp": datetime.now().isoformat(timespec="seconds"),
+            "Modell": namn,
+            **resultat,
+            "rader": len(champion_rader),
+        })
+
+    jamfordelse_df = pd.DataFrame(rader)
+    display_df(jamfordelse_df)
+
+    append_jamfordelse_log(cfg.jamfordelse_log, jamfordelse_df)
+
+    log.info(
+        "Head-to-head på (låst) testdata (%s gemensamma rader) är klar.",
+        len(champion_rader),
+    )
+
+
+def jamfor_routat_system(
+    cfg,
+    champion_modell,
+    champion_namn,
+    niche_modell,
+    niche_namn,
+    niche_threshold,
+    val_path,
+):
+    """
+    Offline-utvärdering av det ROUTADE systemet mot den ordinarie
+    championen på valideringsdata (plan 01): rader med pm25 vid T
+    >= niche_threshold ägs av nisch-championen, övriga rader av den
+    ordinarie championen — exakt som live-routern.
+
+    Kolumnen 'MAE under gräns' visar felet på de rader routern aldrig
+    rör: för championen och det routade systemet måste den vara
+    IDENTISK — det är beviset på att routern är av under gränsen och
+    att totalfelet där lämnas orört. High-PM-måtten följer
+    evaluate_model:s konvention (målet y >= gräns).
+
+    Persistence-baseline visas som referens, samma mönster som
+    jamfor_championer. Resultatet visas och appendas till
+    logs/jamforelse_champion.csv (nya kolumner migreras in i den
+    befintliga rubrikraden, se append_jamfordelse_log).
+
+    Parametrar
+    ----------
+    cfg : ProjectConfig
+        features, target-kolumn och jämförelselogg.
+    champion_modell, champion_namn : estimator, str
+        Den ordinarie (vanliga linjens) champion.
+    niche_modell, niche_namn : estimator, str
+        Nisch-championen (kan vara PersistenceModel).
+    niche_threshold : float
+        Gränsen ur nisch-championens metadata — enda källan.
+    val_path : Path
+        Processad valideringsfil (vanliga linjens, cfg.val_processed).
+    """
+    if champion_modell is None or niche_modell is None:
+        log.warning(
+            "Champion eller nisch-champion saknas — hoppar över "
+            "utvärderingen av det routade systemet."
+        )
+        return
+
+    val_df = pd.read_csv(val_path)
+    X = val_df[cfg.features]
+    y = val_df[cfg.target_column]
+
+    routade = (val_df["pm25"] >= niche_threshold).to_numpy()
+    if routade.all() or not routade.any():
+        log.warning(
+            "Alla eller inga valideringsrader ligger över gränsen %.2f — "
+            "rutningseffekten kan inte visas. Hoppar över jämförelsen.",
+            niche_threshold,
+        )
+        return
+
+    undre = ~routade
+
+    pred_champion = np.asarray(champion_modell.predict(X))
+    pred_nisch = np.asarray(niche_modell.predict(X))
+    pred_routat = np.where(routade, pred_nisch, pred_champion)
+
+    system = [
+        (f"{champion_namn} (utan routing)", pred_champion),
+        (f"Routat system ({champion_namn} + {niche_namn})", pred_routat),
+        ("Persistence Baseline", val_df["pm25"].to_numpy()),
+    ]
+
+    rader = []
+    for namn, y_pred in system:
+        resultat = evaluate_model(y, y_pred, threshold=niche_threshold)
+        rader.append({
+            "timestamp": datetime.now().isoformat(timespec="seconds"),
+            "Modell": namn,
+            **resultat,
+            "MAE under gräns": mean_absolute_error(
+                y.to_numpy()[undre], y_pred[undre]
+            ),
+            "rader": len(val_df),
+            "routade rader": int(routade.sum()),
+        })
+
+    jamfordelse_df = pd.DataFrame(rader)
+    display_df(jamfordelse_df)
+
+    append_jamfordelse_log(cfg.jamfordelse_log, jamfordelse_df)
+
+    log.info(
+        "Utvärdering av routat system (%d valideringsrader, %d routade) är klar.",
+        len(val_df), int(routade.sum()),
+    )
+
+
+
+
+
+# Används i live prediktioner
+def sammanstall_live_uppfoljning(uppf_df):
+    """
+    Rättade live-prediktioner per (linje, modell), med samma måttberäkning
+    som resten av projektet (evaluate_model): MAE, RMSE, R2, Bias.
+
+    Sist läggs persistence-baslinjen till (senaste mätningen som prognos),
+    beräknad per unik måltid så att samma timme inte väger dubbelt.
+
+    uppf_df behöver kolumnerna: linje, modell, prediktion, faktiskt,
+    pm25_senaste, mål_tid. Returnerar tabellen sorterad på MAE (lägst bäst).
+    """
+    rader = []
+    for (linje, modell), grupp in uppf_df.groupby(["linje", "modell"]):
+        resultat = evaluate_model(grupp["faktiskt"], grupp["prediktion"])
+        rader.append({"linje": linje, "modell": modell, "antal": len(grupp), **resultat})
+
+    pers = uppf_df.drop_duplicates(subset=["mål_tid"])
+    rader.append({
+        "linje": "persistence-baseline",
+        "modell": "senaste mätningen",
+        "antal": len(pers),
+        **evaluate_model(pers["faktiskt"], pers["pm25_senaste"]),
+    })
+
+    return (
+        pd.DataFrame(rader)
+        .sort_values("MAE")
+        .loc[:, ["linje", "modell", "antal", "MAE", "RMSE", "R2", "Bias"]]
+        .reset_index(drop=True)
+    )
+

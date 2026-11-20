@@ -1,0 +1,7 @@
+timestamp,dataset,rader_merged,rader_validerad,rader_kvar,borttagna,andel_borttagna,saknade_pm25,saknade_Lufttemperatur,saknade_vind_sin,saknade_vind_cos,saknade_Vindhastighet,saknade_Relativ luftfuktighet,saknade_Nederbördsmängd,saknade_timme_sin,saknade_timme_cos,saknade_helg,saknade_helg_timme_sin,saknade_helg_timme_cos,saknade_target
+2026-11-15T20:35:39,train_processed_2023-05-26_2026-01-31.csv,23569,23569,22295,1274,0.0541,156,536,572,572,572,570,1069,0,0,0,0,0,160
+2026-11-15T20:35:39,val_processed_2026-02-01_2026-07-31.csv,4343,4343,4285,58,0.0134,1,0,2,2,2,0,48,0,0,0,0,0,7
+2026-11-15T20:35:39,test_processed_2026-08-01_2026-11-15.csv,2561,2561,2436,125,0.0488,17,0,0,0,0,0,96,0,0,0,0,0,23
+2026-11-15T20:35:39,train_processed_forskjuten_2023-05-26_2026-01-31_h6.csv,23569,23569,22295,1274,0.0541,156,542,578,578,578,576,1075,0,0,0,0,0,160
+2026-11-15T20:35:39,val_processed_forskjuten_2026-02-01_2026-07-31_h6.csv,4343,4343,4285,58,0.0134,1,6,8,8,8,6,54,0,0,0,0,0,7
+2026-11-15T20:35:39,test_processed_forskjuten_2026-08-01_2026-11-15_h6.csv,2561,2561,2436,125,0.0488,17,6,6,6,6,6,102,0,0,0,0,0,23

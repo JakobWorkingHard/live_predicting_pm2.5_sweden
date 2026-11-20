@@ -1,0 +1,319 @@
+2026-11-20 11:47:01,657 | INFO | src.champion | Champion-duell på valideringsdata (30 rader), kompositscore: dagens 0.0000, tidigare 2.0000. Vinnare: new.
+2026-11-20 11:47:01,671 | INFO | src.champion | Champion-duell på valideringsdata (30 rader), kompositscore: dagens 2.0000, tidigare 2.0000. Vinnare: old.
+2026-11-20 11:47:01,682 | INFO | src.champion | Champion-duell på valideringsdata (30 rader), kompositscore: dagens 3.0000, tidigare 2.0000. Vinnare: old.
+2026-11-20 11:47:01,689 | INFO | src.champion | Ingen tidigare champion finns. Ny vinner automatiskt.
+2026-11-20 11:47:01,700 | INFO | src.champion | Champion-duell på valideringsdata (30 rader), kompositscore: dagens 0.0000, tidigare 2.0000. Vinnare: new.
+2026-11-20 11:47:01,710 | INFO | src.champion | Champion-duell på valideringsdata (30 rader), kompositscore: dagens 2.0000, tidigare 2.0000. Vinnare: old.
+2026-11-20 11:47:01,713 | WARNING | src.metrics | Kompositscoren saknar High-PM-underlag (antal över gränsen: 0, min_antal_high: 3) — poängsätter enbart MAE.
+2026-11-20 11:47:01,714 | WARNING | src.metrics | Kompositscoren saknar High-PM-underlag (antal över gränsen: 0, min_antal_high: 3) — poängsätter enbart MAE.
+2026-11-20 11:47:01,715 | INFO | src.champion | Champion-duell på valideringsdata (30 rader), kompositscore: dagens 2.0000, tidigare 2.0000. Vinnare: old.
+2026-11-20 11:47:01,732 | ERROR | src.data_pipeline | Ett låst test-snapshot finns redan (C:\Users\Lenovo\AppData\Local\Temp\pytest-of-Lenovo\pytest-43\test_skapa_last_test_snapshot_0\test_last\manifest.json). Ett om-snapshot är ett versionsbeslut: dokumentera det i docs/decisions.md och kör igen med --ersatt.
+2026-11-20 11:47:01,746 | INFO | src.data_pipeline | Låst test-snapshot skapat i C:\Users\Lenovo\AppData\Local\Temp\pytest-of-Lenovo\pytest-43\test_skapa_last_test_snapshot_1\test_last (period 2026-07-01 00:00 – 2026-11-14 20:00).
+2026-11-20 11:47:01,753 | ERROR | src.data_pipeline | Ett låst test-snapshot finns redan (C:\Users\Lenovo\AppData\Local\Temp\pytest-of-Lenovo\pytest-43\test_skapa_last_test_snapshot_1\test_last\manifest.json). Ett om-snapshot är ett versionsbeslut: dokumentera det i docs/decisions.md och kör igen med --ersatt.
+2026-11-20 11:47:01,772 | INFO | pm25 | Senaste PM2.5 hämtad: 3 rader, senaste 48 timmarna.
+2026-11-20 11:47:01,778 | INFO | pm25 | Senaste PM2.5 hämtad: 3 rader, senaste 48 timmarna.
+2026-11-20 11:47:01,788 | INFO | pm25 | Senaste PM2.5 hämtad: 3 rader, senaste 48 timmarna.
+2026-11-20 11:47:01,798 | INFO | pm25 | Städade prognosarkivet: tog bort 2 fil(er) äldre än 30/7 dagar.
+2026-11-20 11:47:01,803 | INFO | pm25 | Städade prognosarkivet: tog bort 1 fil(er) äldre än 30/7 dagar.
+2026-11-20 11:47:01,870 | INFO | src.io | Läser in champion SVR vanlig (T+6) från C:\Users\Lenovo\AppData\Local\Temp\pytest-of-Lenovo\pytest-43\test_hamta_champion_modell_hit0\models\svr_vanlig_(t+6)_Validation_R2_2026_10_21_10-00.joblib
+2026-11-20 11:47:01,906 | INFO | src.io | Städade C:\Users\Lenovo\AppData\Local\Temp\pytest-of-Lenovo\pytest-43\test_stada_models_dir_behaller0\models: tog bort 2 modellfil(er): gammal.joblib, gammal.json
+2026-11-20 11:47:01,936 | INFO | src.io | Trimmade C:\Users\Lenovo\AppData\Local\Temp\pytest-of-Lenovo\pytest-43\test_trim_prediktioner_log_ren0\prediktioner_live.csv: tog bort 2 rad(er) för linjen vanlig — behållna modeller: Ny vanlig (T+6).
+2026-11-20 11:47:01,966 | INFO | src.io | Trimmade C:\Users\Lenovo\AppData\Local\Temp\pytest-of-Lenovo\pytest-43\test_trim_prediktioner_log_beh0\prediktioner_live.csv: tog bort 2 rad(er) för linjen vanlig — behållna modeller: SVR vanlig (T+6), SVR nisch (T+6).
+2026-11-20 11:47:01,997 | WARNING | src.io | Metadatafilen C:\Users\Lenovo\AppData\Local\Temp\pytest-of-Lenovo\pytest-43\test_las_champion_metadata_fai0\finns_inte.json hittades inte.
+2026-11-20 11:47:01,997 | WARNING | src.io | Metadatafilen C:\Users\Lenovo\AppData\Local\Temp\pytest-of-Lenovo\pytest-43\test_las_champion_metadata_fai0\nisch_annan_namnstam.json hittades inte.
+2026-11-20 11:47:01,998 | WARNING | src.io | Metadatafilen C:\Users\Lenovo\AppData\Local\Temp\pytest-of-Lenovo\pytest-43\test_las_champion_metadata_fai0\saknad_mapp\x.json hittades inte.
+2026-11-20 11:47:02,005 | WARNING | src.io | Kunde inte läsa C:\Users\Lenovo\AppData\Local\Temp\pytest-of-Lenovo\pytest-43\test_las_champion_metadata_fai0\korrupt.json (Expecting value: line 1 column 1 (char 0)).
+2026-11-20 11:47:02,084 | INFO | src.io | Städade C:\Users\Lenovo\AppData\Local\Temp\pytest-of-Lenovo\pytest-43\test_stada_models_dir_skyddar_0\models: tog bort 2 modellfil(er): nisch_a.joblib, nisch_a.json
+2026-11-20 11:47:02,116 | INFO | src.io | --- Datakontroll: train_processed.csv ---
+2026-11-20 11:47:02,116 | INFO | src.io | Rader i mergad fil: 100
+2026-11-20 11:47:02,117 | INFO | src.io | Rader efter validate_data: 100
+2026-11-20 11:47:02,117 | INFO | src.io | Rader efter dropna: 90
+2026-11-20 11:47:02,117 | INFO | src.io | Borttagna rader: 10 (10.0%)
+2026-11-20 11:47:02,117 | INFO | src.io | Saknade värden per kolumn (en rad kan sakna flera):
+pm25    17
+2026-11-20 11:47:02,120 | INFO | src.io | Längsta sammanhängande data-gap per kolumn (topp 3):
+        kolumn  langsta_gap_timmar  antal_gap_over_horisont
+          pm25                  17                        1
+Lufttemperatur                   0                        0
+2026-11-20 11:47:02,121 | INFO | src.io | Loggade datakontroll i: C:\Users\Lenovo\AppData\Local\Temp\pytest-of-Lenovo\pytest-43\test_append_datakontroll_log_m0\datakontroll_6247.csv
+2026-11-20 11:47:02,134 | INFO | src.io | --- Datakontroll: train_processed.csv ---
+2026-11-20 11:47:02,134 | INFO | src.io | Rader i mergad fil: 100
+2026-11-20 11:47:02,134 | INFO | src.io | Rader efter validate_data: 100
+2026-11-20 11:47:02,134 | INFO | src.io | Rader efter dropna: 99
+2026-11-20 11:47:02,134 | INFO | src.io | Borttagna rader: 1 (1.0%)
+2026-11-20 11:47:02,135 | INFO | src.io | Saknade värden per kolumn (en rad kan sakna flera):
+pm25    1
+2026-11-20 11:47:02,136 | INFO | src.io | Längsta sammanhängande data-gap per kolumn (topp 3):
+        kolumn  langsta_gap_timmar  antal_gap_over_horisont
+          pm25                  17                        1
+Lufttemperatur                   0                        0
+2026-11-20 11:47:02,146 | INFO | src.io | Loggade datakontroll i: C:\Users\Lenovo\AppData\Local\Temp\pytest-of-Lenovo\pytest-43\test_append_datakontroll_log_m1\datakontroll_6247.csv
+2026-11-20 11:47:02,157 | INFO | src.io | Loggade 2 data-gap i C:\Users\Lenovo\AppData\Local\Temp\pytest-of-Lenovo\pytest-43\test_append_bortfallsanalys_lo0\bortfallsanalys_6247.csv.
+2026-11-20 11:47:02,236 | INFO | src.metrics | Head-to-head på (låst) testdata (3 gemensamma rader) är klar.
+2026-11-20 11:47:02,258 | INFO | src.metrics | Head-to-head på (låst) testdata (2 gemensamma rader) är klar.
+2026-11-20 11:47:02,280 | INFO | src.metrics | Utvärdering av routat system (5 valideringsrader, 2 routade) är klar.
+2026-11-20 11:47:02,293 | WARNING | src.metrics | Alla eller inga valideringsrader ligger över gränsen 100.00 — rutningseffekten kan inte visas. Hoppar över jämförelsen.
+2026-11-20 11:47:02,294 | WARNING | src.metrics | Alla eller inga valideringsrader ligger över gränsen 0.50 — rutningseffekten kan inte visas. Hoppar över jämförelsen.
+2026-11-20 11:47:02,296 | WARNING | src.metrics | Kompositscoren saknar High-PM-underlag (antal över gränsen: 0, min_antal_high: 10) — poängsätter enbart MAE.
+2026-11-20 11:47:02,298 | WARNING | src.metrics | Kompositscoren saknar High-PM-underlag (antal över gränsen: 9, min_antal_high: 10) — poängsätter enbart MAE.
+2026-11-20 11:47:02,313 | INFO | src.model_pipeline | Ingen tillräckligt aktuell nisch champion finns. Startar nisch-turnering för höga PM2.5-värden. Färskhetsgräns: 7 dagar.
+2026-11-20 11:47:02,327 | INFO | src.model_pipeline | Gräns för höga PM2.5 (p90 av tränings-pm25): 909.10 µg/m³
+2026-11-20 11:47:02,328 | INFO | src.model_pipeline | Nisch-turnering: 101 träningsrader, 51 valideringsrader med pm25 över gränsen.
+2026-11-20 11:47:02,337 | INFO | src.model_pipeline | Bästa nisch-kandidat (Validation High PM2.5 MAE): Persistence Baseline. Score: 0.0000.
+2026-11-20 11:47:02,343 | INFO | src.io | Läser in champion SVR vanlig (T+6) från C:\Users\Lenovo\AppData\Local\Temp\pytest-of-Lenovo\pytest-43\test_adoption_persistence_spar0\models\ordnarie_champion_test.joblib
+2026-11-20 11:47:02,355 | INFO | src.io | Ingen champion-logg hittades: C:\Users\Lenovo\AppData\Local\Temp\pytest-of-Lenovo\pytest-43\test_adoption_persistence_spar0\champion_nisch.csv
+2026-11-20 11:47:02,357 | INFO | src.model_pipeline | Nisch-champion Persistence Baseline nisch (T+6) har sparats och antagits.
+2026-11-20 11:47:02,365 | INFO | src.io | Trimmade C:\Users\Lenovo\AppData\Local\Temp\pytest-of-Lenovo\pytest-43\test_adoption_persistence_spar0\prediktioner_live.csv: tog bort 2 rad(er) för linjen vanlig — behållna modeller: Persistence Baseline nisch (T+6), SVR vanlig (T+6).
+2026-11-20 11:47:02,367 | INFO | src.model_pipeline | Champion-loggen (C:\Users\Lenovo\AppData\Local\Temp\pytest-of-Lenovo\pytest-43\test_adoption_persistence_spar0\champion_nisch.csv) har uppdaterats. Modell: Persistence Baseline nisch (T+6), mått: Validation High PM2.5 MAE, score: 0.0000.
+2026-11-20 11:47:02,400 | INFO | src.model_pipeline | Ingen tillräckligt aktuell nisch champion finns. Startar nisch-turnering för höga PM2.5-värden. Färskhetsgräns: 7 dagar.
+2026-11-20 11:47:02,409 | INFO | src.model_pipeline | Gräns för höga PM2.5 (p90 av tränings-pm25): 909.10 µg/m³
+2026-11-20 11:47:02,409 | INFO | src.model_pipeline | Nisch-turnering: 101 träningsrader, 51 valideringsrader med pm25 över gränsen.
+2026-11-20 11:47:02,419 | INFO | src.model_pipeline | Bästa nisch-kandidat (Validation High PM2.5 MAE): Persistence Baseline. Score: 0.0000.
+2026-11-20 11:47:02,426 | INFO | src.io | Läser in champion SVR vanlig (T+6) från C:\Users\Lenovo\AppData\Local\Temp\pytest-of-Lenovo\pytest-43\test_tie_mot_ordinarie_champio0\models\ordnarie_champion_test.joblib
+2026-11-20 11:47:02,438 | INFO | src.model_pipeline | Nisch-kandidaten slog inte den ordinarie championen på Validation High PM2.5 MAE (0.0000 vs 0.0000) — ingen routing: den ordinarie championen servar allt.
+2026-11-20 11:47:02,454 | INFO | src.model_pipeline | Ingen tillräckligt aktuell nisch champion finns. Startar nisch-turnering för höga PM2.5-värden. Färskhetsgräns: 7 dagar.
+2026-11-20 11:47:02,468 | INFO | src.model_pipeline | Gräns för höga PM2.5 (p90 av tränings-pm25): 909.10 µg/m³
+2026-11-20 11:47:02,469 | INFO | src.model_pipeline | Nisch-turnering: 101 träningsrader, 51 valideringsrader med pm25 över gränsen.
+2026-11-20 11:47:02,478 | INFO | src.model_pipeline | Bästa nisch-kandidat (Validation High PM2.5 MAE): Persistence Baseline. Score: 5.0000.
+2026-11-20 11:47:02,485 | INFO | src.io | Läser in champion SVR vanlig (T+6) från C:\Users\Lenovo\AppData\Local\Temp\pytest-of-Lenovo\pytest-43\test_samre_an_ordinarie_champi0\models\ordnarie_champion_test.joblib
+2026-11-20 11:47:02,489 | INFO | src.model_pipeline | Nisch-kandidaten slog inte den ordinarie championen på Validation High PM2.5 MAE (5.0000 vs 5.0000) — ingen routing: den ordinarie championen servar allt.
+2026-11-20 11:47:02,499 | INFO | src.model_pipeline | Ingen tillräckligt aktuell nisch champion finns. Startar nisch-turnering för höga PM2.5-värden. Färskhetsgräns: 7 dagar.
+2026-11-20 11:47:02,508 | INFO | src.model_pipeline | Gräns för höga PM2.5 (p90 av tränings-pm25): 909.10 µg/m³
+2026-11-20 11:47:02,509 | INFO | src.model_pipeline | Nisch-turnering: 101 träningsrader, 51 valideringsrader med pm25 över gränsen.
+2026-11-20 11:47:02,518 | INFO | src.model_pipeline | Bästa nisch-kandidat (Validation High PM2.5 MAE): Persistence Baseline. Score: 0.0000.
+2026-11-20 11:47:02,525 | INFO | src.io | Läser in champion SVR vanlig (T+6) från C:\Users\Lenovo\AppData\Local\Temp\pytest-of-Lenovo\pytest-43\test_tidigare_nisch_champion_b0\models\ordnarie_champion_test.joblib
+2026-11-20 11:47:02,529 | INFO | src.io | Ingen champion-logg hittades: C:\Users\Lenovo\AppData\Local\Temp\pytest-of-Lenovo\pytest-43\test_tidigare_nisch_champion_b0\champion_nisch.csv
+2026-11-20 11:47:02,530 | INFO | src.model_pipeline | Nisch-champion Persistence Baseline nisch (T+6) har sparats och antagits.
+2026-11-20 11:47:02,534 | INFO | src.io | Trimmade C:\Users\Lenovo\AppData\Local\Temp\pytest-of-Lenovo\pytest-43\test_tidigare_nisch_champion_b0\prediktioner_live.csv: tog bort 2 rad(er) för linjen vanlig — behållna modeller: Persistence Baseline nisch (T+6), SVR vanlig (T+6).
+2026-11-20 11:47:02,536 | INFO | src.model_pipeline | Champion-loggen (C:\Users\Lenovo\AppData\Local\Temp\pytest-of-Lenovo\pytest-43\test_tidigare_nisch_champion_b0\champion_nisch.csv) har uppdaterats. Modell: Persistence Baseline nisch (T+6), mått: Validation High PM2.5 MAE, score: 0.0000.
+2026-11-20 11:47:02,544 | INFO | src.model_pipeline | Ingen tillräckligt aktuell nisch champion finns. Startar nisch-turnering för höga PM2.5-värden. Färskhetsgräns: 0 dagar.
+2026-11-20 11:47:02,547 | INFO | src.model_pipeline | Gräns för höga PM2.5 (p90 av tränings-pm25): 909.10 µg/m³
+2026-11-20 11:47:02,548 | INFO | src.model_pipeline | Nisch-turnering: 101 träningsrader, 51 valideringsrader med pm25 över gränsen.
+2026-11-20 11:47:02,556 | INFO | src.model_pipeline | Bästa nisch-kandidat (Validation High PM2.5 MAE): Persistence Baseline. Score: 0.0000.
+2026-11-20 11:47:02,557 | INFO | src.io | Läser in champion SVR vanlig (T+6) från C:\Users\Lenovo\AppData\Local\Temp\pytest-of-Lenovo\pytest-43\test_tidigare_nisch_champion_b0\models\ordnarie_champion_test.joblib
+2026-11-20 11:47:02,561 | INFO | src.io | Läser in champion Persistence Baseline nisch (T+6) från C:\Users\Lenovo\AppData\Local\Temp\pytest-of-Lenovo\pytest-43\test_tidigare_nisch_champion_b0\models\nisch_persistence_baseline_nisch_(t+6)_Validation_High_PM2.5_MAE_2026_11_20_11-47.joblib
+2026-11-20 11:47:02,565 | INFO | src.model_pipeline | Tidigare nisch-champion Persistence Baseline nisch (T+6) behålls (Validation High PM2.5 MAE: 0.0000 vs 0.0000).
+2026-11-20 11:47:02,578 | INFO | src.model_pipeline | Ingen tillräckligt aktuell nisch champion finns. Startar nisch-turnering för höga PM2.5-värden. Färskhetsgräns: 7 dagar.
+2026-11-20 11:47:02,588 | INFO | src.model_pipeline | Gräns för höga PM2.5 (p90 av tränings-pm25): 909.10 µg/m³
+2026-11-20 11:47:02,589 | INFO | src.model_pipeline | Nisch-turnering: 101 träningsrader, 51 valideringsrader med pm25 över gränsen.
+2026-11-20 11:47:02,601 | INFO | src.model_pipeline | Bästa nisch-kandidat (Validation High PM2.5 MAE): Persistence Baseline. Score: 5.0000.
+2026-11-20 11:47:02,611 | INFO | src.io | Läser in champion SVR vanlig (T+6) från C:\Users\Lenovo\AppData\Local\Temp\pytest-of-Lenovo\pytest-43\test_ny_kandidat_ersatter_gamm0\models\ordnarie_champion_test.joblib
+2026-11-20 11:47:02,618 | INFO | src.io | Ingen champion-logg hittades: C:\Users\Lenovo\AppData\Local\Temp\pytest-of-Lenovo\pytest-43\test_ny_kandidat_ersatter_gamm0\champion_nisch.csv
+2026-11-20 11:47:02,620 | INFO | src.model_pipeline | Nisch-champion Persistence Baseline nisch (T+6) har sparats och antagits.
+2026-11-20 11:47:02,625 | INFO | src.io | Trimmade C:\Users\Lenovo\AppData\Local\Temp\pytest-of-Lenovo\pytest-43\test_ny_kandidat_ersatter_gamm0\prediktioner_live.csv: tog bort 2 rad(er) för linjen vanlig — behållna modeller: Persistence Baseline nisch (T+6), SVR vanlig (T+6).
+2026-11-20 11:47:02,628 | INFO | src.model_pipeline | Champion-loggen (C:\Users\Lenovo\AppData\Local\Temp\pytest-of-Lenovo\pytest-43\test_ny_kandidat_ersatter_gamm0\champion_nisch.csv) har uppdaterats. Modell: Persistence Baseline nisch (T+6), mått: Validation High PM2.5 MAE, score: 5.0000.
+2026-11-20 11:47:02,637 | INFO | src.model_pipeline | Ingen tillräckligt aktuell nisch champion finns. Startar nisch-turnering för höga PM2.5-värden. Färskhetsgräns: 0 dagar.
+2026-11-20 11:47:02,640 | INFO | src.model_pipeline | Gräns för höga PM2.5 (p90 av tränings-pm25): 909.10 µg/m³
+2026-11-20 11:47:02,641 | INFO | src.model_pipeline | Nisch-turnering: 101 träningsrader, 51 valideringsrader med pm25 över gränsen.
+2026-11-20 11:47:03,238 | INFO | src.model_pipeline | Bästa nisch-kandidat (Validation High PM2.5 MAE): Linear Regression. Score: 0.0000.
+2026-11-20 11:47:03,240 | INFO | src.io | Läser in champion SVR vanlig (T+6) från C:\Users\Lenovo\AppData\Local\Temp\pytest-of-Lenovo\pytest-43\test_ny_kandidat_ersatter_gamm0\models\ordnarie_champion_test.joblib
+2026-11-20 11:47:03,247 | INFO | src.io | Läser in champion Persistence Baseline nisch (T+6) från C:\Users\Lenovo\AppData\Local\Temp\pytest-of-Lenovo\pytest-43\test_ny_kandidat_ersatter_gamm0\models\nisch_persistence_baseline_nisch_(t+6)_Validation_High_PM2.5_MAE_2026_11_20_11-47.joblib
+2026-11-20 11:47:03,254 | INFO | src.model_pipeline | Nisch-champion Linear Regression nisch (T+6) har sparats och antagits.
+2026-11-20 11:47:03,260 | INFO | src.io | Trimmade C:\Users\Lenovo\AppData\Local\Temp\pytest-of-Lenovo\pytest-43\test_ny_kandidat_ersatter_gamm0\prediktioner_live.csv: tog bort 1 rad(er) för linjen vanlig — behållna modeller: Linear Regression nisch (T+6), SVR vanlig (T+6).
+2026-11-20 11:47:03,264 | INFO | src.model_pipeline | Champion-loggen (C:\Users\Lenovo\AppData\Local\Temp\pytest-of-Lenovo\pytest-43\test_ny_kandidat_ersatter_gamm0\champion_nisch.csv) har uppdaterats. Modell: Linear Regression nisch (T+6), mått: Validation High PM2.5 MAE, score: 0.0000.
+2026-11-20 11:47:03,305 | INFO | src.model_pipeline | Ingen tillräckligt aktuell nisch champion finns. Startar nisch-turnering för höga PM2.5-värden. Färskhetsgräns: 7 dagar.
+2026-11-20 11:47:03,319 | INFO | src.model_pipeline | Gräns för höga PM2.5 (p90 av tränings-pm25): 909.10 µg/m³
+2026-11-20 11:47:03,320 | INFO | src.model_pipeline | Nisch-turnering: 101 träningsrader, 51 valideringsrader med pm25 över gränsen.
+2026-11-20 11:47:03,333 | INFO | src.model_pipeline | Bästa nisch-kandidat (Validation High PM2.5 MAE): Persistence Baseline. Score: 0.0000.
+2026-11-20 11:47:03,333 | INFO | src.io | Ingen champion-logg hittades: C:\Users\Lenovo\AppData\Local\Temp\pytest-of-Lenovo\pytest-43\test_ingen_ordinarie_champion_0\champion_vanlig.csv
+2026-11-20 11:47:03,333 | WARNING | src.model_pipeline | Ingen ordinarie champion-modell att möta — nisch-championen kan inte antas den här körningen.
+2026-11-20 11:47:03,343 | INFO | src.model_pipeline | Ingen tillräckligt aktuell nisch champion finns. Startar nisch-turnering för höga PM2.5-värden. Färskhetsgräns: 7 dagar.
+2026-11-20 11:47:03,357 | INFO | src.model_pipeline | Gräns för höga PM2.5 (p90 av tränings-pm25): 27.10 µg/m³
+2026-11-20 11:47:03,358 | INFO | src.model_pipeline | Nisch-turnering: 3 träningsrader, 2 valideringsrader med pm25 över gränsen.
+2026-11-20 11:47:03,358 | WARNING | src.model_pipeline | För få nisch-rader (train 3, val 2) eller inga valrader med målet över gränsen — nisch-linjen hoppas över den här körningen.
+2026-11-20 11:47:03,368 | INFO | src.model_pipeline | Ingen tillräckligt aktuell nisch champion finns. Startar nisch-turnering för höga PM2.5-värden. Färskhetsgräns: 7 dagar.
+2026-11-20 11:47:03,377 | INFO | src.model_pipeline | Gräns för höga PM2.5 (p90 av tränings-pm25): 909.10 µg/m³
+2026-11-20 11:47:03,378 | INFO | src.model_pipeline | Nisch-turnering: 101 träningsrader, 51 valideringsrader med pm25 över gränsen.
+2026-11-20 11:47:03,387 | INFO | src.model_pipeline | Bästa nisch-kandidat (Validation High PM2.5 MAE): Persistence Baseline. Score: 0.0000.
+2026-11-20 11:47:03,395 | INFO | src.io | Läser in champion SVR vanlig (T+6) från C:\Users\Lenovo\AppData\Local\Temp\pytest-of-Lenovo\pytest-43\test_farsk_nisch_champion_ladd0\models\ordnarie_champion_test.joblib
+2026-11-20 11:47:03,399 | INFO | src.io | Ingen champion-logg hittades: C:\Users\Lenovo\AppData\Local\Temp\pytest-of-Lenovo\pytest-43\test_farsk_nisch_champion_ladd0\champion_nisch.csv
+2026-11-20 11:47:03,401 | INFO | src.model_pipeline | Nisch-champion Persistence Baseline nisch (T+6) har sparats och antagits.
+2026-11-20 11:47:03,405 | INFO | src.io | Trimmade C:\Users\Lenovo\AppData\Local\Temp\pytest-of-Lenovo\pytest-43\test_farsk_nisch_champion_ladd0\prediktioner_live.csv: tog bort 2 rad(er) för linjen vanlig — behållna modeller: Persistence Baseline nisch (T+6), SVR vanlig (T+6).
+2026-11-20 11:47:03,407 | INFO | src.model_pipeline | Champion-loggen (C:\Users\Lenovo\AppData\Local\Temp\pytest-of-Lenovo\pytest-43\test_farsk_nisch_champion_ladd0\champion_nisch.csv) har uppdaterats. Modell: Persistence Baseline nisch (T+6), mått: Validation High PM2.5 MAE, score: 0.0000.
+2026-11-20 11:47:03,415 | INFO | src.io | Läser in champion Persistence Baseline nisch (T+6) från C:\Users\Lenovo\AppData\Local\Temp\pytest-of-Lenovo\pytest-43\test_farsk_nisch_champion_ladd0\models\nisch_persistence_baseline_nisch_(t+6)_Validation_High_PM2.5_MAE_2026_11_20_11-47.joblib
+2026-11-20 11:47:03,422 | INFO | src.model_pipeline | En befintlig nisch champion är fortfarande aktuell: Persistence Baseline nisch (T+6) (gräns 909.10 µg/m³). Ingen nisch-omträning.
+2026-11-20 11:47:03,429 | INFO | src.model_pipeline | Ingen tillräckligt aktuell vanlig champion finns. Startar modellträning. Gräns: 7 dagar.
+2026-11-20 11:47:03,442 | INFO | src.model_pipeline | Utvärderingsgräns för High-PM-mått (p90 av träningsmålet): 108.20 µg/m³
+2026-11-20 11:47:03,448 | INFO | src.model_pipeline | Träningen av den vanlig modellinjen är klar.
+2026-11-20 11:47:03,453 | INFO | src.model_pipeline | Bästa alternativ (vanlig): Linear Regression. Urvalsmått: Validation Composite. Score: 0.0000.
+2026-11-20 11:47:03,454 | INFO | src.io | Ingen champion-logg hittades: C:\Users\Lenovo\AppData\Local\Temp\pytest-of-Lenovo\pytest-43\test_run_model_line_vinnare_lo0\champion_vanlig.csv
+2026-11-20 11:47:03,457 | INFO | src.champion | Ingen tidigare champion finns. Linear Regression vanlig (T+6) vinner automatiskt.
+2026-11-20 11:47:03,460 | INFO | src.model_pipeline | Champion Linear Regression vanlig (T+6) har sparats.
+2026-11-20 11:47:03,460 | INFO | src.model_pipeline | Slutligt valt alternativ (vanlig): Linear Regression vanlig (T+6)
+2026-11-20 11:47:03,464 | INFO | src.model_pipeline | Champion-loggen (vanlig) har uppdaterats. Modell: Linear Regression vanlig (T+6), mått: Composite, score: 0.0000.
+2026-11-20 11:47:03,494 | INFO | src.model_pipeline | Ingen tillräckligt aktuell vanlig champion finns. Startar modellträning. Gräns: 7 dagar.
+2026-11-20 11:47:03,498 | INFO | src.model_pipeline | Utvärderingsgräns för High-PM-mått (p90 av träningsmålet): 108.20 µg/m³
+2026-11-20 11:47:03,504 | INFO | src.model_pipeline | Träningen av den vanlig modellinjen är klar.
+2026-11-20 11:47:03,509 | INFO | src.model_pipeline | Bästa alternativ (vanlig): Linear Regression. Urvalsmått: Validation Composite. Score: 0.0000.
+2026-11-20 11:47:03,511 | INFO | src.io | Läser in champion Linear Regression vanlig (T+6) från C:\Users\Lenovo\AppData\Local\Temp\pytest-of-Lenovo\pytest-43\test_run_model_line_gammal_cha0\models\gammal_champion.joblib
+2026-11-20 11:47:03,524 | INFO | src.champion | Champion-duell på valideringsdata (20 rader), kompositscore: dagens 0.0000, tidigare 0.0000. Vinnare: old.
+2026-11-20 11:47:03,526 | INFO | src.model_pipeline | Den tidigare championen Linear Regression vanlig (T+6) behålls.
+2026-11-20 11:47:03,526 | INFO | src.model_pipeline | Slutligt valt alternativ (vanlig): Linear Regression vanlig (T+6)
+2026-11-20 11:47:03,529 | INFO | src.model_pipeline | Champion-loggen (vanlig) har uppdaterats. Modell: Linear Regression vanlig (T+6), mått: Composite, score: 0.0000.
+2026-11-20 11:47:03,539 | INFO | pm25 | Ankarpunkt T_obs: 2026-10-21 14:00:00+02:00
+2026-11-20 11:47:03,542 | INFO | pm25 | Ankarpunkt T_obs: 2026-10-21 11:00:00+02:00
+2026-11-20 11:47:03,544 | WARNING | pm25 | Ingen komplett timme hittades — ingen ankarpunkt.
+2026-11-20 11:47:03,547 | INFO | pm25 | Ankarpunkt T_obs: 2026-10-21 11:00:00+02:00
+2026-11-20 11:47:03,557 | INFO | pm25 | Routing: pm25 14.4 µg/m³ >= gränsen 14.40 µg/m³ — nisch-championen SVR nisch (T+6) predikterar den vanliga linjen.
+2026-11-20 11:47:03,557 | INFO | pm25 | Routing: pm25 25.0 µg/m³ >= gränsen 14.40 µg/m³ — nisch-championen SVR nisch (T+6) predikterar den vanliga linjen.
+2026-11-20 11:47:03,571 | INFO | src.io | Läser in champion Nisch Dummy nisch (T+6) från C:\Users\Lenovo\AppData\Local\Temp\pytest-of-Lenovo\pytest-43\test_hamta_nisch_champion_laes0\nisch_nisch_dummy_nisch_(t+6)_Validation_High_PM2.5_MAE_2026_11_20_11-47.joblib
+2026-11-20 11:47:03,600 | INFO | src.io | Läser in champion Nisch Dummy nisch (T+6) från C:\Users\Lenovo\AppData\Local\Temp\pytest-of-Lenovo\pytest-43\test_hamta_nisch_champion_utan0\nisch_nisch_dummy_nisch_(t+6)_Validation_High_PM2.5_MAE_2026_11_20_11-47.joblib
+2026-11-20 11:47:03,607 | WARNING | pm25 | Nisch-championen Nisch Dummy nisch (T+6) saknar 'threshold' i metadata — routern är av och den ordinarie championen servar allt.
+2026-11-20 11:47:03,610 | INFO | src.io | Ingen champion-logg hittades: C:\Users\Lenovo\AppData\Local\Temp\pytest-of-Lenovo\pytest-43\test_hamta_nisch_champion_utan1\finns_inte.csv
+2026-11-20 11:47:03,656 | INFO | pm25 | Ankarpunkt T_obs: 2026-11-20 11:00:00+01:00
+2026-11-20 11:47:03,656 | INFO | pm25 | T_obs: 2026-11-20 11:00:00+01:00 (0.8 h gammal) -> prediktion för 2026-11-20 17:00:00+01:00
+2026-11-20 11:47:03,662 | INFO | pm25 | Väderprognos för måltiden 2026-11-20 17:00:00+01:00 (använd av linjen forskjuten): Lufttemperatur=5, Vindriktning=180, Vindhastighet=3, Relativ luftfuktighet=70, Nederbördsmängd=0
+2026-11-20 11:47:03,665 | INFO | pm25 | Modellrader byggda för T_obs 2026-11-20 11:00:00+01:00, måltid 2026-11-20 17:00:00+01:00: vanlig, forskjuten.
+2026-11-20 11:47:03,673 | INFO | src.io | Läser in champion SVR vanlig (T+6) från C:\Users\Lenovo\AppData\Local\Temp\pytest-of-Lenovo\pytest-43\test_live_normal_korning_skriv0\models\svr_vanlig_(t+6)_Validation_Composite_2026_11_20_11-47.joblib
+2026-11-20 11:47:03,689 | INFO | src.io | Läser in champion SVR forskjuten (T+6) från C:\Users\Lenovo\AppData\Local\Temp\pytest-of-Lenovo\pytest-43\test_live_normal_korning_skriv0\models\forskjuten_svr_forskjuten_(t+6)_Validation_Composite_2026_11_20_11-47.joblib
+2026-11-20 11:47:03,690 | INFO | src.io | Ingen champion-logg hittades: C:\Users\Lenovo\AppData\Local\Temp\pytest-of-Lenovo\pytest-43\test_live_normal_korning_skriv0\champion_nisch.csv
+2026-11-20 11:47:03,695 | INFO | pm25 | Loggade 2 live-prediktioner i C:\Users\Lenovo\AppData\Local\Temp\pytest-of-Lenovo\pytest-43\test_live_normal_korning_skriv0\prognoser\prediktioner_live.csv.
+2026-11-20 11:47:03,721 | INFO | pm25 | Ankarpunkt T_obs: 2026-11-20 11:00:00+01:00
+2026-11-20 11:47:03,721 | INFO | pm25 | T_obs: 2026-11-20 11:00:00+01:00 (0.8 h gammal) -> prediktion för 2026-11-20 17:00:00+01:00
+2026-11-20 11:47:03,722 | WARNING | pm25 | Prognosen täcker inte måltiden 2026-11-20 17:00:00+01:00 (senaste prognossteg: 2026-11-20 13:00:00+01:00) — den förskjutna linjen hoppas över, den vanliga servas.
+2026-11-20 11:47:03,727 | INFO | pm25 | Modellrader byggda för T_obs 2026-11-20 11:00:00+01:00, måltid 2026-11-20 17:00:00+01:00: vanlig.
+2026-11-20 11:47:03,735 | INFO | src.io | Läser in champion SVR vanlig (T+6) från C:\Users\Lenovo\AppData\Local\Temp\pytest-of-Lenovo\pytest-43\test_live_prognos_saknas_malti0\models\svr_vanlig_(t+6)_Validation_Composite_2026_11_20_11-47.joblib
+2026-11-20 11:47:03,742 | INFO | src.io | Läser in champion SVR forskjuten (T+6) från C:\Users\Lenovo\AppData\Local\Temp\pytest-of-Lenovo\pytest-43\test_live_prognos_saknas_malti0\models\forskjuten_svr_forskjuten_(t+6)_Validation_Composite_2026_11_20_11-47.joblib
+2026-11-20 11:47:03,743 | INFO | src.io | Ingen champion-logg hittades: C:\Users\Lenovo\AppData\Local\Temp\pytest-of-Lenovo\pytest-43\test_live_prognos_saknas_malti0\champion_nisch.csv
+2026-11-20 11:47:03,745 | WARNING | pm25 | Prognosen täcker inte 2026-11-20 17:00:00+01:00 — ingen väderprognos visas.
+2026-11-20 11:47:03,747 | INFO | pm25 | Loggade 1 live-prediktioner i C:\Users\Lenovo\AppData\Local\Temp\pytest-of-Lenovo\pytest-43\test_live_prognos_saknas_malti0\prognoser\prediktioner_live.csv.
+2026-11-20 11:47:03,772 | WARNING | pm25 | Ingen komplett timme hittades — ingen ankarpunkt.
+2026-11-20 11:47:03,772 | WARNING | pm25 | Live-körning hoppades över: ingen komplett timme.
+2026-11-20 11:47:04,166 | INFO | pm25 | Ankarpunkt T_obs: 2026-11-20 02:00:00+01:00
+2026-11-20 11:47:04,167 | INFO | pm25 | T_obs: 2026-11-20 02:00:00+01:00 (9.8 h gammal) -> prediktion för 2026-11-20 08:00:00+01:00
+2026-11-20 11:47:04,167 | WARNING | pm25 | Live-körning hoppades över: T_obs 9.8 h gammal (max 6 h).
+2026-11-20 11:47:04,187 | INFO | pm25 | Ankarpunkt T_obs: 2026-11-20 11:00:00+01:00
+2026-11-20 11:47:04,188 | INFO | pm25 | T_obs: 2026-11-20 11:00:00+01:00 (0.8 h gammal) -> prediktion för 2026-11-20 17:00:00+01:00
+2026-11-20 11:47:04,196 | WARNING | pm25 | Live-körning hoppades över: T_obs redan predikterad (slå av [live].idempotent för att köra ändå).
+2026-11-20 11:47:04,196 | INFO | pm25 | Tidigare prediktioner för T_obs 2026-11-20 11:00:00+01:00:
+2026-11-20 11:47:04,214 | INFO | pm25 | Ankarpunkt T_obs: 2026-11-20 11:00:00+01:00
+2026-11-20 11:47:04,215 | INFO | pm25 | T_obs: 2026-11-20 11:00:00+01:00 (0.8 h gammal) -> prediktion för 2026-11-20 17:00:00+01:00
+2026-11-20 11:47:04,219 | INFO | pm25 | Väderprognos för måltiden 2026-11-20 17:00:00+01:00 (använd av linjen forskjuten): Lufttemperatur=5, Vindriktning=180, Vindhastighet=3, Relativ luftfuktighet=70, Nederbördsmängd=0
+2026-11-20 11:47:04,222 | INFO | pm25 | Modellrader byggda för T_obs 2026-11-20 11:00:00+01:00, måltid 2026-11-20 17:00:00+01:00: vanlig, forskjuten.
+2026-11-20 11:47:04,222 | INFO | src.io | Ingen champion-logg hittades: C:\Users\Lenovo\AppData\Local\Temp\pytest-of-Lenovo\pytest-43\test_live_champion_saknas_per_0\champion_vanlig.csv
+2026-11-20 11:47:04,230 | INFO | src.io | Läser in champion SVR forskjuten (T+6) från C:\Users\Lenovo\AppData\Local\Temp\pytest-of-Lenovo\pytest-43\test_live_champion_saknas_per_0\models\forskjuten_svr_forskjuten_(t+6)_Validation_Composite_2026_11_20_11-47.joblib
+2026-11-20 11:47:04,231 | INFO | src.io | Ingen champion-logg hittades: C:\Users\Lenovo\AppData\Local\Temp\pytest-of-Lenovo\pytest-43\test_live_champion_saknas_per_0\champion_nisch.csv
+2026-11-20 11:47:04,231 | WARNING | pm25 | Hoppar över linjen vanlig: ingen champion hittades.
+2026-11-20 11:47:04,236 | INFO | pm25 | Loggade 1 live-prediktioner i C:\Users\Lenovo\AppData\Local\Temp\pytest-of-Lenovo\pytest-43\test_live_champion_saknas_per_0\prognoser\prediktioner_live.csv.
+2026-11-20 11:47:04,256 | INFO | pm25 | Ankarpunkt T_obs: 2026-11-20 11:00:00+01:00
+2026-11-20 11:47:04,256 | INFO | pm25 | T_obs: 2026-11-20 11:00:00+01:00 (0.8 h gammal) -> prediktion för 2026-11-20 17:00:00+01:00
+2026-11-20 11:47:04,257 | WARNING | pm25 | Väderslotten för linjen vanlig är inte komplett (saknas: Relativ luftfuktighet) — linjen hoppas över.
+2026-11-20 11:47:04,259 | INFO | pm25 | Väderprognos för måltiden 2026-11-20 17:00:00+01:00 (använd av linjen forskjuten): Lufttemperatur=5, Vindriktning=180, Vindhastighet=3, Relativ luftfuktighet=70, Nederbördsmängd=0
+2026-11-20 11:47:04,263 | INFO | pm25 | Modellrader byggda för T_obs 2026-11-20 11:00:00+01:00, måltid 2026-11-20 17:00:00+01:00: forskjuten.
+2026-11-20 11:47:04,273 | INFO | src.io | Läser in champion SVR vanlig (T+6) från C:\Users\Lenovo\AppData\Local\Temp\pytest-of-Lenovo\pytest-43\test_live_ogiltig_vaderslot_de0\models\svr_vanlig_(t+6)_Validation_Composite_2026_11_20_11-47.joblib
+2026-11-20 11:47:04,280 | INFO | src.io | Läser in champion SVR forskjuten (T+6) från C:\Users\Lenovo\AppData\Local\Temp\pytest-of-Lenovo\pytest-43\test_live_ogiltig_vaderslot_de0\models\forskjuten_svr_forskjuten_(t+6)_Validation_Composite_2026_11_20_11-47.joblib
+2026-11-20 11:47:04,281 | INFO | src.io | Ingen champion-logg hittades: C:\Users\Lenovo\AppData\Local\Temp\pytest-of-Lenovo\pytest-43\test_live_ogiltig_vaderslot_de0\champion_nisch.csv
+2026-11-20 11:47:04,285 | INFO | pm25 | Loggade 1 live-prediktioner i C:\Users\Lenovo\AppData\Local\Temp\pytest-of-Lenovo\pytest-43\test_live_ogiltig_vaderslot_de0\prognoser\prediktioner_live.csv.
+2026-11-20 11:47:04,327 | INFO | src.stations | Par: Malmö Dalaplan (Gaturum, serie 6247, start 2018-01-01) + Malmö A [id 52350] — 4.3 km
+2026-11-20 11:47:04,327 | INFO | src.stations | 1 stationpar inom 15 km klarade alla filter.
+2026-11-20 11:47:04,328 | INFO | src.stations | Par: Malmö Dalaplan (Gaturum, serie 6247, start 2018-01-01) + Malmö A [id 52350] — 4.3 km
+2026-11-20 11:47:04,329 | INFO | src.stations | Par: Malmö Rådhuset (Urban bakgrund, serie 6161, start 2018-01-01) + Malmö A [id 52350] — 5.8 km
+2026-11-20 11:47:04,329 | INFO | src.stations | 2 stationpar inom 10 km klarade alla filter.
+2026-11-20 11:47:04,330 | INFO | src.stations | Malmö Dalaplan: ingen kvalificerad väderstation inom 10 km — hoppas över.
+2026-11-20 11:47:04,330 | INFO | src.stations | 0 stationpar inom 10 km klarade alla filter.
+2026-11-20 11:47:04,331 | INFO | src.stations | Ung station: serien startade 2026-01-01 — mindre än 24 månader träning efter valideringens 6 månader. Hoppas över.
+2026-11-20 11:47:04,331 | INFO | src.stations | 0 stationpar inom 10 km klarade alla filter.
+2026-11-20 11:47:04,333 | INFO | src.stations | Par: Malmö Dalaplan (Gaturum, serie 6247, start 2018-01-01) + Tidig väderstation [id 2] — 8.3 km
+2026-11-20 11:47:04,333 | INFO | src.stations | 1 stationpar inom 10 km klarade alla filter.
+2026-11-20 11:47:04,334 | INFO | src.stations | Luft-API:et: 4 tidsserier, varav 3 PM2.5-kandidater.
+2026-11-20 11:47:04,335 | INFO | src.stations | Tidsserie-metadata pass 1: 3 klar, 0 misslyckade.
+2026-11-20 11:47:04,336 | INFO | src.stations | Igårstation: senaste värdet 2026-10-11 är äldre än 14 dagar — stationen rapporterar inte aktivt och hoppas över.
+2026-11-20 11:47:04,336 | INFO | src.stations | 1 av 2 PM2.5-stationer har en aktivt rapporterande serie.
+2026-11-20 11:47:04,340 | INFO | src.stations | Skrev 2 stationpar till cachen: C:\Users\Lenovo\AppData\Local\Temp\pytest-of-Lenovo\pytest-43\test_cache_roundtrip0\stationspar_v1.csv
+2026-11-20 11:47:04,351 | INFO | src.stations | Skrev 1 stationpar till cachen: C:\Users\Lenovo\AppData\Local\Temp\pytest-of-Lenovo\pytest-43\test_hamta_stationpar_anvander0\stationspar_v1.csv
+2026-11-20 11:47:04,359 | INFO | src.stations | Läser 1 stationpar ur färsk cache (C:\Users\Lenovo\AppData\Local\Temp\pytest-of-Lenovo\pytest-43\test_hamta_stationpar_anvander0\stationspar_v1.csv, beräknad 2026-11-20 11:47:04).
+2026-11-20 11:47:04,363 | INFO | src.stations | Skrev 1 stationpar till cachen: C:\Users\Lenovo\AppData\Local\Temp\pytest-of-Lenovo\pytest-43\test_hamta_stationpar_faller_t0\stationspar_v1.csv
+2026-11-20 11:47:04,374 | INFO | src.stations | Stationparcachen saknas eller är äldre än 7 dagar — kör full upptäckt mot API:erna (kan ta några minuter).
+2026-11-20 11:47:04,376 | WARNING | src.stations | Upptäkten misslyckades (SMHI nere) — använder den gamla cachen från 2020-01-01 00:00:00 med 1 par.
+2026-11-20 11:47:04,408 | WARNING | src.metrics | Kompositscoren saknar High-PM-underlag (antal över gränsen: 1, min_antal_high: 10) — poängsätter enbart MAE.
+2026-11-20 11:47:12,394 | INFO | src.train_models | Hparam-sökning för Ridge Regression: använder de 40 senaste av 100 träningsraderna.
+2026-11-20 11:47:12,437 | INFO | src.train_models | Bästa params för Ridge Regression: {'alpha': 1.0} (sök-score -0.3989 på 80 rader, 0.0 s).
+2026-11-20 11:47:12,437 | INFO | src.train_models | Återanvänder sökresultatet för Ridge Regression (delas mellan modellinjerna inom körningen).
+2026-11-20 11:47:12,468 | INFO | src.train_models | Bästa params för Ridge Regression: {'alpha': 1.0} (sök-score -0.3989 på 80 rader, 0.0 s).
+2026-11-20 11:47:12,469 | INFO | src.train_models | Sökresultaten är cachade i C:\Users\Lenovo\AppData\Local\Temp\pytest-of-Lenovo\pytest-43\test_sok_parametrar_for_regist0\hparam_sok_2026-11-20_114712.json.
+2026-11-20 11:47:12,830 | WARNING | src.train_models | Hparam-sökningen misslyckades för Ridge Regression – modellen behåller sina standardparametrar.
+joblib.externals.loky.process_executor._RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "C:\Users\Lenovo\Desktop\LIVE_predicting_PM2.5_SWEDEN\.venv\Lib\site-packages\joblib\externals\loky\process_executor.py", line 490, in _process_worker
+    r = call_item()
+  File "C:\Users\Lenovo\Desktop\LIVE_predicting_PM2.5_SWEDEN\.venv\Lib\site-packages\joblib\externals\loky\process_executor.py", line 291, in __call__
+    return self.fn(*self.args, **self.kwargs)
+           ~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Lenovo\Desktop\LIVE_predicting_PM2.5_SWEDEN\.venv\Lib\site-packages\joblib\parallel.py", line 607, in __call__
+    return [func(*args, **kwargs) for func, args, kwargs in self.items]
+            ~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\Lenovo\Desktop\LIVE_predicting_PM2.5_SWEDEN\.venv\Lib\site-packages\sklearn\utils\parallel.py", line 184, in __call__
+    return self.function(*args, **kwargs)
+           ~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\Lenovo\Desktop\LIVE_predicting_PM2.5_SWEDEN\.venv\Lib\site-packages\sklearn\model_selection\_validation.py", line 832, in _fit_and_score
+    estimator = estimator.set_params(**clone(parameters, safe=False))
+  File "C:\Users\Lenovo\Desktop\LIVE_predicting_PM2.5_SWEDEN\.venv\Lib\site-packages\sklearn\pipeline.py", line 289, in set_params
+    self._set_params("steps", **kwargs)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Lenovo\Desktop\LIVE_predicting_PM2.5_SWEDEN\.venv\Lib\site-packages\sklearn\utils\metaestimators.py", line 75, in _set_params
+    super().set_params(**params)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^
+  File "C:\Users\Lenovo\Desktop\LIVE_predicting_PM2.5_SWEDEN\.venv\Lib\site-packages\sklearn\base.py", line 440, in set_params
+    valid_params[key].set_params(**sub_params)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "C:\Users\Lenovo\Desktop\LIVE_predicting_PM2.5_SWEDEN\.venv\Lib\site-packages\sklearn\base.py", line 428, in set_params
+    raise ValueError(
+    ...<2 lines>...
+    )
+ValueError: Invalid parameter 'ogiltig_parameter' for estimator Ridge(alpha=0.1). Valid parameters are: ['alpha', 'copy_X', 'fit_intercept', 'max_iter', 'positive', 'random_state', 'solver', 'tol'].
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "C:\Users\Lenovo\Desktop\LIVE_predicting_PM2.5_SWEDEN\src\train_models.py", line 569, in sok_parametrar_for_registry
+    params, info = sok_basta_params(
+                   ~~~~~~~~~~~~~~~~^
+        modell_namn=namn,
+        ^^^^^^^^^^^^^^^^^
+    ...<7 lines>...
+        max_rader=max_rader,
+        ^^^^^^^^^^^^^^^^^^^^
+    )
+    ^
+  File "C:\Users\Lenovo\Desktop\LIVE_predicting_PM2.5_SWEDEN\src\train_models.py", line 474, in sok_basta_params
+    gs.fit(X_sok, y_sok)
+    ~~~~~~^^^^^^^^^^^^^^
+  File "C:\Users\Lenovo\Desktop\LIVE_predicting_PM2.5_SWEDEN\.venv\Lib\site-packages\sklearn\base.py", line 1403, in wrapper
+    return fit_method(estimator, *args, **kwargs)
+  File "C:\Users\Lenovo\Desktop\LIVE_predicting_PM2.5_SWEDEN\.venv\Lib\site-packages\sklearn\model_selection\_search.py", line 1134, in fit
+    self._run_search(evaluate_candidates, callback_ctx=root_callback_ctx)
+    ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Lenovo\Desktop\LIVE_predicting_PM2.5_SWEDEN\.venv\Lib\site-packages\sklearn\model_selection\_search.py", line 1721, in _run_search
+    evaluate_candidates(ParameterGrid(self.param_grid), callback_ctx=search_ctx)
+    ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Lenovo\Desktop\LIVE_predicting_PM2.5_SWEDEN\.venv\Lib\site-packages\sklearn\model_selection\_search.py", line 1083, in evaluate_candidates
+    out = parallel(
+        delayed(_fit_and_score)(
+    ...<15 lines>...
+        ) in zip(candidate_split_pairs, evaluation_contexts)
+    )
+  File "C:\Users\Lenovo\Desktop\LIVE_predicting_PM2.5_SWEDEN\.venv\Lib\site-packages\sklearn\utils\parallel.py", line 91, in __call__
+    return super().__call__(iterable_with_config_and_warning_filters)
+           ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Lenovo\Desktop\LIVE_predicting_PM2.5_SWEDEN\.venv\Lib\site-packages\joblib\parallel.py", line 2098, in __call__
+    return output if self.return_generator else list(output)
+                                                ~~~~^^^^^^^^
+  File "C:\Users\Lenovo\Desktop\LIVE_predicting_PM2.5_SWEDEN\.venv\Lib\site-packages\joblib\parallel.py", line 1704, in _get_outputs
+    yield from self._retrieve()
+  File "C:\Users\Lenovo\Desktop\LIVE_predicting_PM2.5_SWEDEN\.venv\Lib\site-packages\joblib\parallel.py", line 1806, in _retrieve
+    self._raise_error_fast()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Lenovo\Desktop\LIVE_predicting_PM2.5_SWEDEN\.venv\Lib\site-packages\joblib\parallel.py", line 1885, in _raise_error_fast
+    error_job.get_result(self.timeout)
+    ~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "C:\Users\Lenovo\Desktop\LIVE_predicting_PM2.5_SWEDEN\.venv\Lib\site-packages\joblib\parallel.py", line 780, in get_result
+    return self._return_or_raise()
+           ~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\Lenovo\Desktop\LIVE_predicting_PM2.5_SWEDEN\.venv\Lib\site-packages\joblib\parallel.py", line 795, in _return_or_raise
+    raise self._result
+ValueError: Invalid parameter 'ogiltig_parameter' for estimator Ridge(alpha=0.1). Valid parameters are: ['alpha', 'copy_X', 'fit_intercept', 'max_iter', 'positive', 'random_state', 'solver', 'tol'].
+2026-11-20 11:47:12,849 | WARNING | src.train_models | Hparam-sökningen: modellnamnet 'Finns Inte' finns inte i modellregistret – hoppar över.
+2026-11-20 11:47:17,113 | WARNING | src.metrics | Kompositscoren saknar High-PM-underlag (antal över gränsen: 2, min_antal_high: 10) — poängsätter enbart MAE.
+2026-11-20 11:47:17,132 | WARNING | src.metrics | Kompositscoren saknar High-PM-underlag (antal över gränsen: 2, min_antal_high: 10) — poängsätter enbart MAE.
