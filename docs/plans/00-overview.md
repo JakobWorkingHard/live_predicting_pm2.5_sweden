@@ -20,6 +20,12 @@ Execution sequencing, branches, phase entry/exit criteria and
 coexistence rules with the scale-out agent are in
 [implementation-roadmap.md](implementation-roadmap.md).
 
+**Update 2026-11-20:** remaining-work sequencing (Phase 1b, the pending
+verdict runs, team decisions, plan 06) lives in
+[updated-plans.md](updated-plans.md) — it supersedes the roadmap's ordering
+for everything still open; this overview's statuses were re-verified
+against the code that same day (141/141 tests green).
+
 ## Team decisions recorded 2026-11-15
 
 1. **Train–serve skew (former plan 03): accepted.** The oracle-based
